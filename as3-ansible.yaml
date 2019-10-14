@@ -6,17 +6,19 @@
 
 
   vars_files:
-    creds.yaml
+    - creds.yaml
+    - vars.yaml
 
   tasks:
 
     - name: Send to BIG-IP
-      uri: https://"{{ bigip }}"/mgmt/shared/appsvcs/declare
-      method: POST
-      user: "{{ bigip_user }}"
-      password: "{{ bigip_password }}"
-      body: "{{ lookup('file','./as3ansible.json') }}"
-      force_basic_auth: yes
-      body_format: json
-      status_code: 200
-      validate_certs: no
+      uri:
+        url: https://{{ bigip }}/mgmt/shared/appsvcs/declare
+        method: POST
+        user: "{{ bigip_user }}"
+        password: "{{ bigip_password }}"
+        body: "{{ lookup('file','./as3ansible.json') }}"
+        force_basic_auth: yes
+        body_format: json
+        status_code: 200
+        validate_certs: no
